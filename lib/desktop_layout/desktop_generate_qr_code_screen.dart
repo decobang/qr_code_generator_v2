@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class GenerateQRCodeScreen extends StatefulWidget {
-  const GenerateQRCodeScreen({super.key});
+class DesktopLayout extends StatefulWidget {
+  const DesktopLayout({super.key});
 
   @override
-  State<GenerateQRCodeScreen> createState() => _GenerateQRCodeScreenState();
+  State<DesktopLayout> createState() => _DesktopLayoutState();
 }
 
 enum ColorType { qrBackground, cornerEye, dots }
 
-class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
+class _DesktopLayoutState extends State<DesktopLayout> {
   String qrData = "https://dcportfolio.web.app/";
   double qrSize = 200.0;
   EdgeInsets qrPadding = const EdgeInsets.all(8.0);
