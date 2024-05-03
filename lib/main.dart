@@ -11,6 +11,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        title: "QR Code Generator", home: GenerateQRCodeScreen());
+        debugShowCheckedModeBanner: false,
+        title: "QR Code Generator",
+        home: GenerateQRCodeScreen());
   }
 }

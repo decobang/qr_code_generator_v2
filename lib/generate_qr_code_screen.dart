@@ -160,6 +160,7 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
                                 "QR Size: ${qrSize.round()}",
                               ),
                               Slider(
+                                activeColor: Colors.grey.shade900,
                                 value: qrSize,
                                 min: 100.0,
                                 max: 500.0,
@@ -178,6 +179,7 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
                                 "QR Padding: ${qrPadding.top.round()}",
                               ),
                               Slider(
+                                activeColor: Colors.grey.shade900,
                                 value: qrPadding.top,
                                 min: 0.0,
                                 max: 50.0,
@@ -206,6 +208,7 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
                                 "Corner Shape",
                               ),
                               ToggleButtons(
+                                selectedColor: Colors.grey.shade900,
                                 isSelected: [
                                   qrEyeShape == QrEyeShape.square,
                                   qrEyeShape == QrEyeShape.circle,
@@ -217,9 +220,11 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
                                         : QrEyeShape.circle;
                                   });
                                 },
-                                children: const <Widget>[
-                                  Icon(Icons.crop_square),
-                                  Icon(Icons.radio_button_unchecked),
+                                children: <Widget>[
+                                  Icon(Icons.crop_square,
+                                      color: Colors.grey.shade900),
+                                  Icon(Icons.radio_button_unchecked,
+                                      color: Colors.grey.shade900),
                                 ],
                               ),
                             ],
@@ -230,6 +235,7 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
                                 "Dots Shape",
                               ),
                               ToggleButtons(
+                                selectedColor: Colors.grey.shade900,
                                 isSelected: [
                                   qrDotsShape == QrDataModuleShape.square,
                                   qrDotsShape == QrDataModuleShape.circle,
@@ -241,9 +247,15 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
                                         : QrDataModuleShape.circle;
                                   });
                                 },
-                                children: const <Widget>[
-                                  Icon(Icons.crop_square),
-                                  Icon(Icons.radio_button_unchecked),
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.crop_square,
+                                    color: Colors.grey.shade900,
+                                  ),
+                                  Icon(
+                                    Icons.radio_button_unchecked,
+                                    color: Colors.grey.shade900,
+                                  ),
                                 ],
                               ),
                             ],
@@ -290,13 +302,14 @@ class _GenerateQRCodeScreenState extends State<GenerateQRCodeScreen> {
           )
         ]),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.grey[900],
           onPressed: () {
             setState(() {
               qrData = qrDataController.text;
               saveQrCode(qrKey, context);
             });
           },
-          child: const Icon(Icons.download),
+          child: const Icon(Icons.download, color: Colors.white),
         ));
   }
 
