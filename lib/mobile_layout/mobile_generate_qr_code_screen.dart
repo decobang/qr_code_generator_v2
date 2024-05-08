@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:html' as html;
@@ -6,6 +7,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MobileLayout extends StatefulWidget {
@@ -329,8 +331,6 @@ class _MobileLayoutState extends State<MobileLayout> {
 }
 
 Future<void> saveQrCode(GlobalKey qrKey, BuildContext context) async {
-  // ...
-
   try {
     // Capture the QR code as an image
     RenderRepaintBoundary boundary =
@@ -339,10 +339,16 @@ Future<void> saveQrCode(GlobalKey qrKey, BuildContext context) async {
     ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-    // Save the image to the gallery
-    final result = await ImageGallerySaver.saveImage(pngBytes);
-    print('Image saved to the gallery: $result');
+    // Encode our image to base64
+    final base64Image = base64Encode(pngBytes);
+
+    // Create the link with the image data
+    final anchor = html.AnchorElement(
+      href: 'data:image/png;base64,$base64Image',
+    )
+      ..setAttribute('download', 'qr_code.png')
+      ..click();
   } catch (e) {
-    print(e);
+print(e);
   }
 }
