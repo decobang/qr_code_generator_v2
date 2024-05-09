@@ -6,7 +6,7 @@ class QrSizePaddingCard extends StatelessWidget {
   final Function(double) onSizeChanged;
   final Function(double) onPaddingChanged;
 
-  QrSizePaddingCard({
+  const QrSizePaddingCard({super.key, 
     required this.qrSize,
     required this.qrPadding,
     required this.onSizeChanged,

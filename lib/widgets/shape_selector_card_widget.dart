@@ -7,7 +7,7 @@ class ShapeSelectorCard extends StatelessWidget {
   final Function(int) onEyeShapeChanged;
   final Function(int) onDotsShapeChanged;
 
-  ShapeSelectorCard({
+  const ShapeSelectorCard({super.key, 
     required this.qrEyeShape,
     required this.qrDotsShape,
     required this.onEyeShapeChanged,

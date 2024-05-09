@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class QrDataInputCard extends StatelessWidget {
+class DataInputCard extends StatelessWidget {
   final TextEditingController qrDataController;
   final Function(String) onChanged;
 
-  const QrDataInputCard({super.key, required this.qrDataController, required this.onChanged});
+  const DataInputCard({super.key, required this.qrDataController, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

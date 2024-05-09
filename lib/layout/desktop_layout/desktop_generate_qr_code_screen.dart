@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_generator_v2/utils/qr_logic.dart';
 import 'package:qr_code_generator_v2/widgets/color_type_picker_card_widget.dart';
+import 'package:qr_code_generator_v2/widgets/data_input_card_widget.dart';
 import 'package:qr_code_generator_v2/widgets/padding_and_sizing_card_widget.dart';
 import 'package:qr_code_generator_v2/widgets/shape_selector_card_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -33,25 +34,13 @@ class _DesktopLayoutState extends State<DesktopLayout> with QrCodeLogic {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32.0),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: qrDataController,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: const InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          hintText: "Enter your data",
-                          border: InputBorder.none, // Add this line
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            qrData = value;
-                          });
-                        },
-                      ),
-                    ),
+                  DataInputCard(
+                    qrDataController: qrDataController,
+                    onChanged: (String value) {
+                      setState(() {
+                        qrData = value;
+                      });
+                    },
                   ),
                   const SizedBox(height: 32.0),
                   ColorTypeSelectorCard(

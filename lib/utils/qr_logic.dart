@@ -60,7 +60,7 @@ mixin QrCodeLogic<T extends StatefulWidget> on State<T> {
 
       final base64Image = base64Encode(pngBytes);
 
-      final anchor = html.AnchorElement(
+      html.AnchorElement(
         href: 'data:image/png;base64,$base64Image',
       )
         ..setAttribute('download', 'qr_code.png')
