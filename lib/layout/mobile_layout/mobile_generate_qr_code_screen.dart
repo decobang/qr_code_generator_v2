@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:ui';
-import 'dart:html' as html;
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:qr_code_generator_v2/utils/qr_logic.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MobileLayout extends StatefulWidget {
@@ -14,23 +10,7 @@ class MobileLayout extends StatefulWidget {
   State<MobileLayout> createState() => _MobileLayoutState();
 }
 
-enum ColorType { qrBackground, cornerEye, dots }
-
-class _MobileLayoutState extends State<MobileLayout> {
-  String qrData = "https://dcportfolio.web.app/";
-  double qrSize = 200.0;
-  EdgeInsets qrPadding = const EdgeInsets.all(8.0);
-  Color qrBackgroundColor = Colors.white;
-  Color qrCornerEyesColor = Colors.black;
-  QrEyeShape qrEyeShape = QrEyeShape.square;
-  Color qrDotsColor = Colors.black;
-  QrDataModuleShape qrDotsShape = QrDataModuleShape.square;
-
-  ColorType _colorType = ColorType.qrBackground; // Default color type
-
-  TextEditingController qrDataController = TextEditingController();
-
-  final GlobalKey qrKey = GlobalKey();
+class _MobileLayoutState extends State<MobileLayout> with QrCodeLogic {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,22 +87,22 @@ class _MobileLayoutState extends State<MobileLayout> {
                                       fillColor: Colors.white,
                                       selectedColor: Colors.black,
                                       isSelected: [
-                                        _colorType == ColorType.qrBackground,
-                                        _colorType == ColorType.cornerEye,
-                                        _colorType == ColorType.dots,
+                                        colorType == ColorType.qrBackground,
+                                        colorType == ColorType.cornerEye,
+                                        colorType == ColorType.dots,
                                       ],
                                       onPressed: (int index) {
                                         setState(() {
                                           switch (index) {
                                             case 0:
-                                              _colorType =
+                                              colorType =
                                                   ColorType.qrBackground;
                                               break;
                                             case 1:
-                                              _colorType = ColorType.cornerEye;
+                                              colorType = ColorType.cornerEye;
                                               break;
                                             case 2:
-                                              _colorType = ColorType.dots;
+                                              colorType = ColorType.dots;
                                               break;
                                           }
                                         });
@@ -151,9 +131,9 @@ class _MobileLayoutState extends State<MobileLayout> {
                               const SizedBox(height: 8),
                               ColorPicker(
                                 padding: const EdgeInsets.all(0),
-                                color: _getColor(),
+                                color: getColor(),
                                 onColorChanged: (Color color) =>
-                                    setState(() => _setColor(color)),
+                                    setState(() => setColor(color)),
                                 pickersEnabled: const <ColorPickerType, bool>{
                                   ColorPickerType.wheel:
                                       true, // Enable the wheel picker
@@ -293,59 +273,10 @@ class _MobileLayoutState extends State<MobileLayout> {
           backgroundColor: Colors.white,
           onPressed: () {
             setState(() {
-              qrData = qrDataController.text;
               saveQrCode(qrKey, context);
             });
           },
           child: Icon(Icons.download, color: Colors.grey[900]),
         ));
-  }
-
-  Color _getColor() {
-    switch (_colorType) {
-      case ColorType.qrBackground:
-        return qrBackgroundColor;
-      case ColorType.cornerEye:
-        return qrCornerEyesColor;
-      case ColorType.dots:
-        return qrDotsColor;
-    }
-  }
-
-  void _setColor(Color color) {
-    switch (_colorType) {
-      case ColorType.qrBackground:
-        qrBackgroundColor = color;
-        break;
-      case ColorType.cornerEye:
-        qrCornerEyesColor = color;
-        break;
-      case ColorType.dots:
-        qrDotsColor = color;
-        break;
-    }
-  }
-}
-
-Future<void> saveQrCode(GlobalKey qrKey, BuildContext context) async {
-  try {
-    // Capture the QR code as an image
-    RenderRepaintBoundary boundary =
-        qrKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    var image = await boundary.toImage();
-    ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-    Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-    // Encode our image to base64
-    final base64Image = base64Encode(pngBytes);
-
-    // Create the link with the image data
-    final anchor = html.AnchorElement(
-      href: 'data:image/png;base64,$base64Image',
-    )
-      ..setAttribute('download', 'qr_code.png')
-      ..click();
-  } catch (e) {
-print(e);
   }
 }

@@ -4,7 +4,6 @@ import 'dart:html' as html;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:qr_code_generator_v2/mobile_layout/mobile_generate_qr_code_screen.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 enum ColorType { qrBackground, cornerEye, dots }
@@ -52,6 +51,7 @@ mixin QrCodeLogic<T extends StatefulWidget> on State<T> {
 
   Future<void> saveQrCode(GlobalKey qrKey, BuildContext context) async {
     try {
+      qrData = qrDataController.text;
       RenderRepaintBoundary boundary =
           qrKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
       var image = await boundary.toImage();
