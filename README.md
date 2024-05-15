@@ -1,3 +1,6 @@
-# qr_code_generator_v2
+Generate QR codes for any text, URL, or contact details. 
+Fully customize the QR code down to the last detail to fit your preference. 
 
-A new Flutter project.
+Check it out at the website: https://generateqrcode.web.app/
+
+Full details on YouTube',
